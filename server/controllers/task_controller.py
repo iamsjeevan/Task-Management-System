@@ -14,7 +14,7 @@ class TaskController:
         task_data = self.task_model.create_task(data['title'], data['userEmail'], data['priority'], data['team'])
         for member in data['team']:
             self.notice_model.create_notice([member], f"New task '{data['title']}' assigned.", task_data['_id'], 'alert')
-        return jsonify({"message": "Task created successfully!"}), 201
+        return jsonify({"message": "Task created successfully!","task id": str(task_data['_id'])}), 201
 
     def update(self, task_id):
         data = request.get_json()

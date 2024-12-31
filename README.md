@@ -1,1 +1,5 @@
-``` bash echo "hello world" ```
+```bash
+pip install -r requirments.txt
+cd server
+python run.py
+   ```

@@ -7,11 +7,14 @@ from controllers.user_controller import UserController
 from controllers.task_controller import TaskController
 from controllers.notice_controller import NoticeController
 from config import Config
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config.from_object(Config)
 mongo = PyMongo(app)
 jwt = JWTManager(app)
+CORS(app)  # This allows all domains by default
+
 
 user_controller = UserController(mongo.db)
 task_controller = TaskController(mongo.db)

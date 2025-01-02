@@ -1,8 +1,8 @@
 
+import axios from "axios";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import image1 from '../assets/bg.jpeg';
+import image1 from '../assets/bp.webp';
 
 function Register() {
     const [name, setName] = useState('');
@@ -12,7 +12,7 @@ function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3000/Register', { name, email, password })
+        axios.post('http://127.0.0.1:5000/register', { name, email, password })
             .then(result => {
                 console.log(result);
                 navigate('/Login');

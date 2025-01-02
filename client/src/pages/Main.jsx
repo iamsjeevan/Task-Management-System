@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import NavForAll from './components/NavForAll';
 
 const Main = () => {
   return (

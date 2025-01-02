@@ -7,6 +7,7 @@ import Home from './pages/HomePage.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './pages/Footer.jsx';
 import Main from './pages/Main.jsx';
+import NavForAll from './components/NavForAll.jsx';
 
 function App() {
   const location = useLocation();

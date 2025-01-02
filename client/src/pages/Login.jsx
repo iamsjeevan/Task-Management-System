@@ -12,7 +12,7 @@ const Login = () => {
     // Simulating a backend call for successful login
     if (email && password) {
       alert('Login successful!');
-      navigate('/Main');
+      navigate('/main');
     } else {
       alert('Invalid credentials!');
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavForAll from './components/NavForAll';
 
-const Main = () => {
+const main = () => {
   return (
     <div className="container vh-100 d-flex flex-column justify-content-center align-items-center">
       <h1 className="display-4 mb-5 text-center">Welcome to Collaboration Task Management System</h1>
@@ -14,4 +14,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default main;

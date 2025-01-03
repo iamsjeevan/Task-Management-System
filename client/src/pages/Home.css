@@ -1,0 +1,8 @@
+.home {
+    background-image: url('../assets/homeimage.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    color: black;
+  }
+  

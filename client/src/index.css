@@ -34,6 +34,7 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+<<<<<<< HEAD
 
 button {
   border-radius: 8px;
@@ -66,3 +67,5 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+=======
+>>>>>>> eabdfb1ce68c25777c60533265dbd022252cc120

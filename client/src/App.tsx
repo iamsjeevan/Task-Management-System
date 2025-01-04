@@ -1,11 +1,10 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import CreateTask from '../src/pages/CreateTask';
 import Login from '../src/pages/Login';
-import Registration from '../src/pages/Registration';
 import Main from '../src/pages/Main';
-import CreateCollaboration from '../src/pages/CreateCollaboration';
-import ShowCollaboration from '../src/pages/ShowCollaboration';
+import Registration from '../src/pages/Registration';
+import Task from '../src/pages/Task';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -15,8 +14,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/main" element={<Main />} />
-        <Route path="/create-collaboration" element={<CreateCollaboration />} />
-        <Route path="/show-collaboration" element={<ShowCollaboration />} />
+        <Route path="/create-task" element={<CreateTask />} />
+        <Route path="/tasks" element={<Task />} />
+
       </Routes>
     </Router>
   );

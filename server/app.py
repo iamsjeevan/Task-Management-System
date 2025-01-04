@@ -27,6 +27,9 @@ def register():
 @app.route('/login', methods=['POST'])
 def login():
     return user_controller.login()
+@app.route('/tasks', methods=['GET'])
+def get_all_tasks():
+    return task_controller.show_all()
 
 @app.route('/task', methods=['POST'])
 def create_task():

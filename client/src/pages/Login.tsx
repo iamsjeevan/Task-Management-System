@@ -1,55 +1,71 @@
-import React, { useState } from 'react';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './Login.css'; // Import the CSS file
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post<{ access_token: string }>('http://127.0.0.1:5000/login', { email, password });
-      localStorage.setItem('accessToken', response.data.access_token); // Store the token
-      window.location.href = '/main'; // Redirect to Main page
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed!');
-    }
-  };
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post<{ access_token: string; message?: string }>(
+                'http://127.0.0.1:5000/login',
+                { email, password }
+            );
+            if (response.data.access_token) {
+                localStorage.setItem('accessToken', response.data.access_token);
+                alert('User logged in successfully');
+                navigate('/main');
+            } else {
+                alert(response.data.message || 'Login failed');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('An error occurred, please try again');
+        }
+    };
 
-  return (
-    <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh', backgroundSize: 'cover' }}>
-      <form className="bg-light p-4 rounded" onSubmit={handleLogin}>
-        <h2 className="text-center">Login</h2>
-        {error && <div className="alert alert-danger">{error}</div>}
-        <div className="mb-3">
-          <label>Email</label>
-          <input
-            type="email"
-            className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+    return (
+        <div className="login-container">
+            <div className="login-card">
+                <h2 className="login-title">Login</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="email" className="form-label">Email</label>
+                        <input
+                            type="email"
+                            placeholder="Enter Email"
+                            autoComplete="off"
+                            name="email"
+                            className="form-input"
+                            required
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password" className="form-label">Password</label>
+                        <input
+                            type="password"
+                            placeholder="Enter Password"
+                            autoComplete="off"
+                            name="password"
+                            className="form-input"
+                            required
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <button type="submit" className="login-button">Login</button>
+                </form>
+                <p className="login-footer">
+                    Don't have an account?{' '}
+                    <Link to="/register" className="register-link">Register</Link>
+                </p>
+            </div>
         </div>
-        <div className="mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary w-100">Login</button>
-        <p className="text-center mt-2">
-          <a href="/register">Register</a>
-        </p>
-      </form>
-    </div>
-  );
+    );
 };
 
 export default Login;

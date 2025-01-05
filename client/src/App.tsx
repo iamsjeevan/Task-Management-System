@@ -4,8 +4,8 @@ import Login from '../src/pages/Login';
 import Main from '../src/pages/Main';
 import Registration from '../src/pages/Registration';
 import Task from '../src/pages/Task';
-import Home from './pages/Home';
-
+import Home from './pages/Home.tsx';
+import MainPage from './pages/mains';
 function App() {
   return (
     <Router>
@@ -16,6 +16,7 @@ function App() {
         <Route path="/main" element={<Main />} />
         <Route path="/create-task" element={<CreateTask />} />
         <Route path="/tasks" element={<Task />} />
+        <Route path="/mains" element={<MainPage />} />
 
       </Routes>
     </Router>

@@ -1,8 +1,7 @@
-import React from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import backgroundImage from '../assets/homeimage.png'; // Correct image import
+import React from 'react';
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 const Home: React.FC = () => {
   return (
@@ -10,7 +9,6 @@ const Home: React.FC = () => {
       <Navbar />
       <div
         style={{
-          backgroundImage: `url(${backgroundImage})`,
           height: '100vh',
           width: '100%',
           backgroundSize: 'cover',
@@ -24,6 +22,8 @@ const Home: React.FC = () => {
         <div style={{ color: 'black', padding: '50px', backgroundColor: 'rgba(255, 255, 255, 0.7)' }}>
           <h1>Collaborative Task Management System</h1>
           <p>Manage your tasks and collaborations efficiently.</p>
+          <a href="/create-task" className="btn btn-primary me-2">Create Collaboration</a>
+            <a href="/tasks" className="btn btn-secondary">Show Collaboration</a>
         </div>
       </div>
       <Footer />

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -40,7 +39,7 @@
 
 .read-the-docs {
   color: #888;
-=======
+}
 body {
   background-color: #ffffff;
   color: #000000;
@@ -87,5 +86,4 @@ body {
 .light .btn-secondary {
   background-color: #007bff;
   color: #ffffff;
->>>>>>> eabdfb1ce68c25777c60533265dbd022252cc120
 }

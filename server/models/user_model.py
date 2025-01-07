@@ -6,17 +6,17 @@ class UserModel:
         self.db = db
         self.collection = db['users']
 
-    def register_user(self, name, email, password):
-        hashed_password = generate_password_hash(password)
+    def register_user(self, name, email, password, is_admin=False):
         user_data = {
             'name': name,
             'email': email,
-            'password': hashed_password,
-            'role': 'user',
-            'isAdmin': False,
+            'password': password,
+            'role': 'admin' if is_admin else 'user',  # Optional 'role' field
+            'isAdmin': is_admin,  # Flag indicating admin status
         }
         self.collection.insert_one(user_data)
         return user_data
+
 
     def find_user_by_email(self, email):
         return self.collection.find_one({'email': email})

@@ -2,7 +2,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import background from '../assets/homeimage.png'; // Import your local background image
+import background from '../assets/adminbg.png'; // Import your local background image
 
 const Login = () => {
     const [email, setEmail] = useState('');

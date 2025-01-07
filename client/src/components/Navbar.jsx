@@ -9,7 +9,9 @@ const Navbar = () => {
         <Link className="navbar-brand" to="/">WorkHive</Link>
         <div className="d-flex">
           <Link className="btn btn-primary me-2" to="/login">Login</Link>
-          <Link className="btn btn-secondary" to="/register">Register</Link>
+          <Link className="btn btn-secondary me-2" to="/register">Register</Link>
+          {/* Added Admin Button */}
+          <Link className="btn btn-warning" to="/admin_login">Admin</Link>
         </div>
       </div>
     </nav>

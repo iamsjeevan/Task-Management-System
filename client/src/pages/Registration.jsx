@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import background from '../assets/homeimage.png'; // Import the background image
+import background from '../assets/adminbg.png'; // Import the background image
 
 const Registration = () => {
   const [name, setName] = useState('');

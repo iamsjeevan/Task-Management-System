@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';  // Import Link for navigation
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import backgroundImage from '../assets/adminbg.png';  // Import the background image
 
 const AdminLogin = () => {
     const [email, setEmail] = useState('');
@@ -35,7 +36,7 @@ const AdminLogin = () => {
         <div
             className="login-container"
             style={{
-                backgroundImage: 'url(/path/to/your/background/image)',  // Use your background image
+                backgroundImage: `url(${backgroundImage})`,  // Set the imported image as the background
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 height: '100vh',
@@ -90,6 +91,13 @@ const AdminLogin = () => {
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
                 </form>
+                
+                {/* Add a link to the Admin Register page */}
+                <div className="mt-3 text-center">
+                    <Link to="/admin_register" className="btn btn-link">
+                        Don't have an account? Register here
+                    </Link>
+                </div>
             </div>
         </div>
     );

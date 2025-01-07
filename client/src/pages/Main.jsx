@@ -1,16 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from '../components/Footer';
 import NavForAll from '../components/NavForAll';
+import { Link } from 'react-router-dom';  // Import Link for navigation
 
 const Main = () => {
-  //useEffect(() => {
-   // const token = localStorage.getItem('accessToken');
-   // if (!token) {
-     // window.location.href = '/login'; // Redirect to login if not authenticated
-   // }
-  //}, []);
-
   return (
     <>
       <NavForAll />
@@ -31,9 +25,10 @@ const Main = () => {
                 🎯 My Work
               </a>
             </li>
+            {/* Changed Home to Analytics */}
             <li>
-              <a href="/home" className="text-decoration-none">
-                🏡 Home
+              <a href="/analytics" className="text-decoration-none">
+                📊 Analytics
               </a>
             </li>
             {/* Calendar Button */}
@@ -55,15 +50,25 @@ const Main = () => {
           <ul className="list-group">
             <li className="list-group-item d-flex justify-content-between align-items-center">
               This app allows you to stay organized and manage your tasks effectively. You'll never forget an important task again!
-              <button className="btn btn-sm btn-info">Learn More</button>
+              <Link to="/learn-more" className="btn btn-sm btn-info">Learn More</Link>
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
               Our goal is to streamline your productivity and keep you focused, helping you manage your time efficiently.
-              <button className="btn btn-sm btn-warning">How It Works</button>
+              <a 
+                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-sm btn-warning"
+              >
+                How It Works
+              </a>
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
               With seamless cross-platform syncing, you can access your tasks from any device at any time.
-              <button className="btn btn-sm btn-success">Get Started</button>
+              {/* Updated "Get Started" button to link to Show Tasks page */}
+              <Link to="/tasks" className="btn btn-sm btn-success">
+                Get Started
+              </Link>
             </li>
           </ul>
         </div>

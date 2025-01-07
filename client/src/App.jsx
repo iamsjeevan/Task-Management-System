@@ -7,6 +7,9 @@ import CreateCollaboration from './pages/CreateCollaboration';
 import Home from './pages/Home';
 import CalendarPage from './pages/Calendar';
 import LearnMore from './pages/LearnMore';
+import AdminLogin from './pages/AdminLogin';
+import AdminMain from './pages/AdminMain';
+import AdminRegister from './pages/AdminRegister';
 
 function App() {
   return (
@@ -20,6 +23,9 @@ function App() {
         <Route path="/tasks" element={<ShowCollaboration />} />
         <Route path="/calender" element={<CalendarPage />} />
         <Route path="/learn-more" element={<LearnMore />} />
+        <Route path="/admin_register" element={<AdminRegister />} />
+        <Route path="/admin_login" element={<AdminLogin />} />
+        <Route path="/admin_main" element={<AdminMain />} />
       </Routes>
     </Router>
   );

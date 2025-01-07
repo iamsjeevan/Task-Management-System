@@ -6,10 +6,13 @@ class TaskModel:
         self.db = db
         self.collection = db['tasks']
 
-    def create_task(self, project_name, user_email, priority, team):
+    def create_task(self, project_name, user_email, priority, team, notes,status):
         """
         Creates a new task and inserts it into the database.
         """
+        if status not in ['pending', 'start', 'completed']:
+            raise ValueError("Invalid status value. Allowed values are 'pending', 'start', and 'completed'.")
+
         task_data = {
             'project_name': project_name,  # Changed to snake_case for consistency
             'created_date': datetime.datetime.now(),
@@ -22,7 +25,9 @@ class TaskModel:
                 'date': datetime.datetime.now()
             }],
             'team': team,
-            'is_trashed': False,  # Trashed state for logical deletion
+            'notes': notes,  # Added notes for the task
+            'is_trashed': False, 
+            'status': status
         }
         
         task_id = self.collection.insert_one(task_data).inserted_id

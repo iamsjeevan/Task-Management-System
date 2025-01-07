@@ -1,4 +1,3 @@
-# controllers/user_controller.py
 
 from flask import request, jsonify
 from flask_jwt_extended import create_access_token
@@ -21,5 +20,13 @@ class UserController:
         user = self.user_model.find_user_by_email(data['email'])
         if not user or not self.user_model.check_password(user['password'], data['password']):
             return jsonify({"message": "Invalid credentials!"}), 401
+        
+        # Create access token
         access_token = create_access_token(identity=user['email'])
-        return jsonify(access_token=access_token), 200
+
+        # Return the token and user info (username and name)
+        return jsonify({
+            'access_token': access_token,
+            'email': user['email'],  # Assuming you have a 'username' field
+            'name': user['name']  # Assuming you have a 'name' field
+        }), 200

@@ -9,7 +9,14 @@ class TaskController:
 
     def create(self):
         data = request.get_json()
-        task_data = self.task_model.create_task(data['title'], data['userEmail'], data['priority'], data['team'])
+        task_data = self.task_model.create_task(
+            data['title'],
+            data['userEmail'],
+            data['priority'],
+            data['team'],
+            data['notes'],
+            data['status']  # Passing notes as additional data
+        )
         
         # Debugging: Log the created task data
         print(f"Task created: {task_data}")

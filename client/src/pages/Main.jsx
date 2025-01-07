@@ -4,12 +4,12 @@ import Footer from '../components/Footer';
 import NavForAll from '../components/NavForAll';
 
 const Main = () => {
-  useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      window.location.href = '/login'; // Redirect to login if not authenticated
-    }
-  }, []);
+  //useEffect(() => {
+   // const token = localStorage.getItem('accessToken');
+   // if (!token) {
+     // window.location.href = '/login'; // Redirect to login if not authenticated
+   // }
+  //}, []);
 
   return (
     <>
@@ -42,19 +42,19 @@ const Main = () => {
 
         {/* Main Content Area */}
         <div className="flex-grow-1 p-4">
-          <h2>Today</h2>
+          <h2>Welcome to the App!</h2>
           <ul className="list-group">
             <li className="list-group-item d-flex justify-content-between align-items-center">
-              Welcome to Todoist! And to 2025 ✨
-              <button className="btn btn-sm btn-success">Complete</button>
+              This app allows you to stay organized and manage your tasks effectively. You'll never forget an important task again!
+              <button className="btn btn-sm btn-info">Learn More</button>
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
-              Start small: Add just 1 task that's occupying space in your mind 🧠
-              <button className="btn btn-sm btn-warning">Pending</button>
+              Our goal is to streamline your productivity and keep you focused, helping you manage your time efficiently.
+              <button className="btn btn-sm btn-warning">How It Works</button>
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
-              Finding your flow? Download Todoist for your other devices!
-              <button className="btn btn-sm btn-info">Explore</button>
+              With seamless cross-platform syncing, you can access your tasks from any device at any time.
+              <button className="btn btn-sm btn-success">Get Started</button>
             </li>
           </ul>
         </div>

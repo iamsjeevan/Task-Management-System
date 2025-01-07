@@ -10,7 +10,7 @@ import LearnMore from './pages/LearnMore';
 import AdminLogin from './pages/AdminLogin';
 import AdminMain from './pages/AdminMain';
 import AdminRegister from './pages/AdminRegister';
-
+import Analytics from './pages/Analytics';
 function App() {
   return (
     <Router>
@@ -26,6 +26,7 @@ function App() {
         <Route path="/admin_register" element={<AdminRegister />} />
         <Route path="/admin_login" element={<AdminLogin />} />
         <Route path="/admin_main" element={<AdminMain />} />
+        <Route path="/analytics" element={<Analytics />} />
       </Routes>
     </Router>
   );

@@ -11,9 +11,10 @@ const Main = () => {
       <NavForAll />
       <div className="d-flex" style={{
         backgroundImage: `url(${backgroundImage})`,  // Use imported image as background
-        backgroundSize: 'cover',
+        backgroundSize: 'contain',  // Make the image smaller by fitting it within the container
         backgroundPosition: 'center',
         minHeight: '100vh',
+        backgroundRepeat: 'no-repeat',  // Prevent background repetition
         padding: '20px',  // Adding some padding to the outer container
       }}>
         {/* Sidebar Navigation */}

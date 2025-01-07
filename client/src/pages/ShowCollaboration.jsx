@@ -27,6 +27,21 @@ const ShowCollaboration = () => {
     );
   };
 
+  // Function to handle deletion of a collaboration
+  const handleDelete = (id) => {
+    // Remove the collaboration from state
+    setCollaborations((prev) => prev.filter((collab) => collab.id !== id));
+
+    // Optional: Call the backend to delete the collaboration
+    axios.delete(`http://127.0.0.1:5000/tasks/${id}`)
+      .then(() => {
+        console.log(`Collaboration with ID ${id} deleted successfully.`);
+      })
+      .catch((error) => {
+        console.error("There was an error deleting the collaboration:", error);
+      });
+  };
+
   // Filter collaborations based on selected filter
   const filteredCollaborations =
     filter === 'All'
@@ -101,9 +116,9 @@ const ShowCollaboration = () => {
                   <strong>Team:</strong> {handleTeamData(collab.team)}<br />
                   <strong>Notes:</strong> {collab.notes}
                 </div>
-                <div>
+                <div className="d-flex flex-column">
                   <select
-                    className="form-select"
+                    className="form-select mb-2"
                     value={collab.status}
                     onChange={(e) => handleStatusChange(collab.id, e.target.value)}
                   >
@@ -111,6 +126,12 @@ const ShowCollaboration = () => {
                     <option value="Complete">Complete</option>
                     <option value="Pending">Pending</option>
                   </select>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDelete(collab.id)}
+                  >
+                    Delete
+                  </button>
                 </div>
               </li>
             ))}

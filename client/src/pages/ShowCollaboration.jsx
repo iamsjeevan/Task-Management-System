@@ -20,11 +20,22 @@ const ShowCollaboration = () => {
 
   // Function to handle status change
   const handleStatusChange = (id, newStatus) => {
-    setCollaborations((prev) =>
-      prev.map((collab) =>
+    setCollaborations((prev) => {
+      const updatedCollaborations = prev.map((collab) =>
         collab.id === id ? { ...collab, status: newStatus } : collab
-      )
-    );
+      );
+
+      // Optional: Send status update to the backend
+      axios.patch(`http://127.0.0.1:5000/tasks/${id}`, { status: newStatus })
+        .then(() => {
+          console.log(`Status for collaboration with ID ${id} updated to ${newStatus}`);
+        })
+        .catch((error) => {
+          console.error("There was an error updating the status:", error);
+        });
+
+      return updatedCollaborations;
+    });
   };
 
   // Function to handle deletion of a collaboration

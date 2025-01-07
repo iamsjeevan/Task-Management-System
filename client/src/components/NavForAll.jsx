@@ -23,15 +23,15 @@ const NavForAll = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: '#6c757d' }}> {/* Grey background */}
+    <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: '#d3d3d3' }}> {/* Light grey background */}
       <div className="container">
         {/* Link the WorkHive to the main page with white text */}
-        <Link className="navbar-brand text-white" to="/main">
+        <Link className="navbar-brand text-dark" to="/main"> {/* Changed text to dark for contrast */}
           WorkHive
         </Link>
         {/* Circle button for User with an image or icon */}
         <button
-          className="btn btn-outline-light rounded-circle p-2"
+          className="btn btn-outline-dark rounded-circle p-2"  // Changed to dark for contrast
           style={{ width: '40px', height: '40px' }}
           onClick={handleShowModal}
         >

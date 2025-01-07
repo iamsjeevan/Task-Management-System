@@ -1,14 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';  // Import React Bootstrap components for Modal
+import axios from 'axios';  // Import axios for making API calls
 
 const NavForAll = () => {
   const [showModal, setShowModal] = useState(false);  // Modal visibility state
-  const [userInfo] = useState({
-    name: 'John Doe', // Example user data, you can replace this with dynamic data
-    email: 'johndoe@example.com'
+  const [userInfo, setUserInfo] = useState({
+    name: '',
+    email: ''
   });
   const navigate = useNavigate();  // To handle navigation
+
+  // Fetch user details on component mount
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        try {
+          // Make an API call to fetch user details
+          const response = await axios.get('http://localhost:5000/get_details', {
+            headers: {
+              Authorization: `Bearer ${token}`  // Include token in the header
+            }
+          });
+          setUserInfo(response.data);  // Set user details to state
+        } catch (error) {
+          console.error("Error fetching user details:", error);
+        }
+      }
+    };
+    
+    fetchUserDetails();  // Call the function to fetch user data
+  }, []);  // Empty dependency array to run only once when the component mounts
 
   // Handle modal close
   const handleCloseModal = () => setShowModal(false);
@@ -23,15 +46,14 @@ const NavForAll = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: '#d3d3d3' }}> {/* Light grey background */}
+    <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: '#d3d3d3' }}>
       <div className="container">
-        {/* Link the WorkHive to the main page with white text */}
-        <Link className="navbar-brand text-dark" to="/main"> {/* Changed text to dark for contrast */}
+        <Link className="navbar-brand text-dark" to="/main">
           WorkHive
         </Link>
         {/* Circle button for User with an image or icon */}
         <button
-          className="btn btn-outline-dark rounded-circle p-2"  // Changed to dark for contrast
+          className="btn btn-outline-dark rounded-circle p-2"
           style={{ width: '40px', height: '40px' }}
           onClick={handleShowModal}
         >

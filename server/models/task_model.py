@@ -6,7 +6,7 @@ class TaskModel:
         self.db = db
         self.collection = db['tasks']
 
-    def create_task(self, project_name, user_email, priority, team, notes, status, start_time, end_time):
+    def create_task(self, project_name, user_email, priority, team, notes, status):
         """
         Creates a new task and inserts it into the database.
         """
@@ -16,8 +16,7 @@ class TaskModel:
         task_data = {
             'project_name': project_name,
             'created_date': datetime.datetime.now(),
-            'start_time': start_time,
-            'end_time': end_time,
+            
             'priority': priority,
             'stage': 'todo',  # Initial stage of the task
             'activities': [{
@@ -40,17 +39,22 @@ class TaskModel:
         
         return task_data
 
-    def get_all_tasks(self, include_trashed=False):
+    def get_user_tasks(self):
         """
-        Retrieves all tasks from the database.
-        Filters out trashed tasks unless include_trashed is True.
+        Retrieves tasks assigned to the user or tasks created by the user.
+        Filters tasks where the logged-in user is either the creator or a team member.
         """
-        query = {} if include_trashed else {'is_trashed': False}
-        tasks = self.collection.find(query)
+        # query = {
+        #     '$or': [
+        #         {'userEmail': user_email},  # Tasks created by the user
+        #         {'team': user_email}        # Tasks assigned to the user
+        #     ]
+        # }
+        tasks = self.collection.find()
         
         # Debugging: Log the number of tasks fetched
         tasks_list = list(tasks)
-        print(f"Fetched {len(tasks_list)} tasks from the database.")
+        # print(f"Fetched {len(tasks_list)} tasks for user {user_email}.")
         
         # Format tasks correctly
         formatted_tasks = [self._format_task(task) for task in tasks_list]

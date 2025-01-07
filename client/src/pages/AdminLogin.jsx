@@ -15,14 +15,15 @@ const AdminLogin = () => {
         try {
             setLoading(true);
             const response = await axios.post('http://127.0.0.1:5000/login', { email, password });
-
-            if (response.data.access_token) {
+    
+            if (response.data.access_token && response.data.role === 'admin') {
                 localStorage.setItem('accessToken', response.data.access_token);
                 localStorage.setItem('email', response.data.email);
                 localStorage.setItem('name', response.data.name);
+                localStorage.setItem('role', response.data.role); // Save the role for future use
                 navigate('/admin_main');
             } else {
-                alert(response.data.message || 'Login failed');
+                alert('You are not authorized to access the admin panel.');
             }
         } catch (err) {
             console.error(err);
@@ -31,6 +32,7 @@ const AdminLogin = () => {
             setLoading(false);
         }
     };
+    
 
     return (
         <div

@@ -3,11 +3,13 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, jsonify
 from models.task_model import TaskModel
 from models.notice_model import NoticeModel
+from models.user_model import UserModel  # Import UserModel
 
 class TaskController:
     def __init__(self, db):
         self.task_model = TaskModel(db)
         self.notice_model = NoticeModel(db)
+        self.user_model = UserModel(db)  # Initialize the user model
 
     @jwt_required()  # Ensure the user is logged in
     def create(self):
@@ -21,10 +23,6 @@ class TaskController:
         if user['role'] != 'admin' and user_email != data['userEmail']:
             return jsonify({"message": "You are not authorized to assign tasks to others."}), 403
         
-        # Add start_time and end_time for the task
-        start_time = datetime.now()
-        end_time = start_time + timedelta(days=7)  # Default end time, you can customize it
-        
         # Call the task model to create the task
         task_data = self.task_model.create_task(
             data['title'],
@@ -32,14 +30,9 @@ class TaskController:
             data['priority'],
             data['team'],
             data['notes'],
-            data['status'],
-            start_time,
-            end_time
+            data['status']  # Default end time to 1 hour later
         )
         
-        # Debugging: Log the created task data
-        print(f"Task created: {task_data}")
-
         # Notify the team members
         for member in data['team']:
             self.notice_model.create_notice([member], f"New task '{data['title']}' assigned.", task_data['_id'], 'alert')
@@ -57,11 +50,12 @@ class TaskController:
         self.task_model.trash_task(task_id)
         return jsonify({"message": "Task moved to trash!"}), 200
 
-    @jwt_required()
+    
     def show_all(self):
-        tasks = self.task_model.get_all_tasks()
+        # Get the email of the currently logged-in user
+       
         
-        # Debugging: Log the number of tasks fetched
-        print(f"Returning {len(tasks)} tasks.")
+        # Fetch tasks where the user is either the creator (userEmail) or part of the team
+        tasks = self.task_model.get_user_tasks()
         
         return jsonify({"tasks": tasks}), 200

@@ -38,11 +38,18 @@ const CreateCollaboration = () => {
       finalDate: finalDate, // Using finalDate instead of status
     };
 
+    const token = localStorage.getItem('token'); // Retrieve JWT token from localStorage
+    if (!token) {
+      alert('You are not authenticated. Please log in.');
+      return;
+    }
+
     try {
       const response = await fetch('http://127.0.0.1:5000/task', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Add JWT token to the request header
         },
         body: JSON.stringify(data),
       });

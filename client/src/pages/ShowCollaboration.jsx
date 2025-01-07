@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavForAll from '../components/NavForAll';
 import Footer from '../components/Footer';
+import axios from 'axios';
 
 const ShowCollaboration = () => {
-  const [collaborations, setCollaborations] = useState([
-    { id: 1, project: 'Project A', leader: 'Alice', team: ['Bob', 'Charlie'], priority: 2, status: 'Start' },
-    { id: 2, project: 'Project B', leader: 'Bob', team: ['Alice', 'David'], priority: 1, status: 'Complete' },
-    { id: 3, project: 'Project C', leader: 'Charlie', team: ['Alice', 'Bob'], priority: 3, status: 'Pending' },
-  ]);
-
+  const [collaborations, setCollaborations] = useState([]);
   const [filter, setFilter] = useState('All'); // Sidebar filter state
+
+  useEffect(() => {
+    // Fetch collaborations from the backend
+    axios.get('http://127.0.0.1:5000/tasks') // Update the API endpoint if needed
+      .then((response) => {
+        setCollaborations(response.data.tasks); // Update state with the fetched tasks
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the collaborations:", error);
+      });
+  }, []);
 
   // Function to handle status change
   const handleStatusChange = (id, newStatus) => {
@@ -27,6 +34,16 @@ const ShowCollaboration = () => {
       : collaborations.filter((collab) => collab.status === filter);
 
   const sortedCollaborations = filteredCollaborations.sort((a, b) => b.priority - a.priority);
+
+  // Helper function to handle team data
+  const handleTeamData = (team) => {
+    if (Array.isArray(team)) {
+      return team.join(', ');
+    } else if (typeof team === 'string') {
+      return team.split(',').join(', ');
+    }
+    return '';
+  };
 
   return (
     <>
@@ -77,11 +94,12 @@ const ShowCollaboration = () => {
             {sortedCollaborations.map((collab) => (
               <li className="list-group-item d-flex justify-content-between align-items-center" key={collab.id}>
                 <div>
-                  <strong>Project:</strong> {collab.project}<br />
-                  <strong>Leader:</strong> {collab.leader}<br />
-                  <strong>Team:</strong> {collab.team.join(', ')}<br />
+                  <strong>Project:</strong> {collab.project_name}<br />
+                  <strong>Created On:</strong> {new Date(collab.created_date).toLocaleString()}<br />
                   <strong>Priority:</strong> {collab.priority}<br />
-                  <strong>Status:</strong> {collab.status}
+                  <strong>Status:</strong> {collab.status}<br />
+                  <strong>Team:</strong> {handleTeamData(collab.team)}<br />
+                  <strong>Notes:</strong> {collab.notes}
                 </div>
                 <div>
                   <select

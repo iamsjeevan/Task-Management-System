@@ -8,14 +8,33 @@ const ShowCollaboration = () => {
   const [filter, setFilter] = useState('All'); // Sidebar filter state
 
   useEffect(() => {
-    // Fetch collaborations from the backend
-    axios.get('http://127.0.0.1:5000/tasks') // Update the API endpoint if needed
-      .then((response) => {
-        setCollaborations(response.data.tasks); // Update state with the fetched tasks
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the collaborations:", error);
-      });
+    const fetchCollaborations = async () => {
+      // Get the email directly from localStorage
+      const email = localStorage.getItem('email');
+
+      if (email) {
+        try {
+          // Fetch all tasks from the backend
+          const response = await axios.get('http://127.0.0.1:5000/tasks', {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`, // Send the token for authentication
+            },
+          });
+
+          // Filter tasks where the `by` field inside `activities` matches the email
+          const filteredTasks = response.data.tasks.filter((task) =>
+            task.activities.some((activity) => activity.by === email)
+          );
+
+          // Update state with filtered tasks
+          setCollaborations(filteredTasks);
+        } catch (error) {
+          console.error("There was an error fetching the collaborations:", error);
+        }
+      }
+    };
+
+    fetchCollaborations(); // Fetch collaborations on component mount
   }, []);
 
   // Function to handle status change

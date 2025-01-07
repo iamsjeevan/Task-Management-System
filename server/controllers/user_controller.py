@@ -38,7 +38,7 @@ class UserController:
             'name': user['name'],
             'role': user['role']
         }))
-        response.set_cookie('access_token', access_token, httponly=True, secure=True, samesite='Strict')
+        response.set_cookie('access_token', access_token, httponly=True, secure=False, samesite='Lax',max_age=7 * 24 * 60 * 60,path="/")
 
         return response, 200
 

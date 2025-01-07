@@ -44,7 +44,6 @@ const NavForAll = () => {
 
   // Handle logout
   const handleLogout = () => {
-    Cookies.remove('accessToken');  // Remove the token from cookies
     navigate('/');  // Redirect to homepage
   };
 

@@ -18,7 +18,10 @@ const Main = () => {
         {/* Sidebar Navigation */}
         <div
           className="bg-light border-end vh-100 p-3"
-          style={{ width: '250px' }}
+          style={{
+            width: '250px',
+            borderRight: '2px solid #343a40'  // Darkened the border color
+          }}
         >
           <h5 className="mb-4">My Projects</h5>
           <ul className="list-unstyled">
@@ -31,6 +34,12 @@ const Main = () => {
             <li>
               <a href="/home" className="text-decoration-none">
                 🏡 Home
+              </a>
+            </li>
+            {/* Calendar Button */}
+            <li className="mt-3">
+              <a href="/calendar" className="btn btn-outline-dark w-100">
+                📅 Calendar
               </a>
             </li>
           </ul>

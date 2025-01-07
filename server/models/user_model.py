@@ -1,27 +1,33 @@
-# models/user_model.py
+from flask import request, jsonify
+from flask_jwt_extended import create_access_token
+from models.user_model import UserModel
 
-from pymongo import MongoClient
-from werkzeug.security import generate_password_hash, check_password_hash
-
-class UserModel:
+class UserController:
     def __init__(self, db):
-        self.db = db
-        self.collection = db['users']
+        self.user_model = UserModel(db)
 
-    def register_user(self, name, email, password):
-        hashed_password = generate_password_hash(password)
-        user_data = {
-            'name': name,
-            'email': email,
-            'password': hashed_password,
-            'role': 'user',
-            'isAdmin': False,
-        }
-        self.collection.insert_one(user_data)
-        return user_data
+    def register(self):
+        data = request.get_json()
+        user = self.user_model.find_user_by_email(data['email'])
+        if user:
+            return jsonify({"message": "Email already registered!"}), 400
+        new_user = self.user_model.register_user(data['name'], data['email'], data['password'], data['role'])
+        return jsonify({"message": "User registered successfully!"}), 201
 
-    def find_user_by_email(self, email):
-        return self.collection.find_one({'email': email})
-
-    def check_password(self, stored_password, provided_password):
-        return check_password_hash(stored_password, provided_password)
+    def login(self):
+        data = request.get_json()
+        user = self.user_model.find_user_by_email(data['email'])
+        if not user or not self.user_model.check_password(user['password'], data['password']):
+            return jsonify({"message": "Invalid credentials!"}), 401
+        
+        # Create access token
+        access_token = create_access_token(identity=user['email'])
+        
+        # Return the token and user info (username, name, role, isAdmin)
+        return jsonify({
+            'access_token': access_token,
+            'email': user['email'],
+            'name': user['name'],
+            'role': user['role'],  # Role returned to indicate admin or user
+            'isAdmin': user['isAdmin']
+        }), 200

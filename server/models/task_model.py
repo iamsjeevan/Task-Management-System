@@ -6,7 +6,7 @@ class TaskModel:
         self.db = db
         self.collection = db['tasks']
 
-    def create_task(self, project_name, user_email, priority, team, notes,status):
+    def create_task(self, project_name, user_email, priority, team, notes, status, start_time, end_time):
         """
         Creates a new task and inserts it into the database.
         """
@@ -14,8 +14,10 @@ class TaskModel:
             raise ValueError("Invalid status value. Allowed values are 'pending', 'start', and 'completed'.")
 
         task_data = {
-            'project_name': project_name,  # Changed to snake_case for consistency
+            'project_name': project_name,
             'created_date': datetime.datetime.now(),
+            'start_time': start_time,
+            'end_time': end_time,
             'priority': priority,
             'stage': 'todo',  # Initial stage of the task
             'activities': [{
@@ -25,7 +27,7 @@ class TaskModel:
                 'date': datetime.datetime.now()
             }],
             'team': team,
-            'notes': notes,  # Added notes for the task
+            'notes': notes,
             'is_trashed': False, 
             'status': status
         }

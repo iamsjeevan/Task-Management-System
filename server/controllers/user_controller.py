@@ -1,4 +1,3 @@
-
 from flask import request, jsonify
 from flask_jwt_extended import create_access_token
 from models.user_model import UserModel
@@ -12,7 +11,7 @@ class UserController:
         user = self.user_model.find_user_by_email(data['email'])
         if user:
             return jsonify({"message": "Email already registered!"}), 400
-        new_user = self.user_model.register_user(data['name'], data['email'], data['password'])
+        new_user = self.user_model.register_user(data['name'], data['email'], data['password'], data['role'])
         return jsonify({"message": "User registered successfully!"}), 201
 
     def login(self):
@@ -23,10 +22,12 @@ class UserController:
         
         # Create access token
         access_token = create_access_token(identity=user['email'])
-
-        # Return the token and user info (username and name)
+        
+        # Return the token and user info (username, name, role, isAdmin)
         return jsonify({
             'access_token': access_token,
-            'email': user['email'],  # Assuming you have a 'username' field
-            'name': user['name']  # Assuming you have a 'name' field
+            'email': user['email'],
+            'name': user['name'],
+            'role': user['role'],  # Role returned to indicate admin or user
+            'isAdmin': user['isAdmin']
         }), 200

@@ -45,7 +45,7 @@ class UserController:
         # Register the user as an admin (you can add extra checks here for admin-specific roles)
         new_user = self.user_model.register_user(data['name'], data['email'], hashed_password)
         
-        # Set the user as an admin (you can adjust this logic if needed)
+        # Set the user as an admin
         self.user_model.set_admin(new_user['email'])
         
         return jsonify({"message": "Admin registered successfully!"}), 201

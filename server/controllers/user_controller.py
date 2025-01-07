@@ -36,7 +36,8 @@ class UserController:
             'message': 'Login successful',
             'email': user['email'],
             'name': user['name'],
-            'role': user['role']
+            'role': user['role'],
+            'access_token': access_token
         }))
         response.set_cookie('access_token', access_token, httponly=True, secure=False, samesite='Lax',max_age=7 * 24 * 60 * 60,path="/")
 

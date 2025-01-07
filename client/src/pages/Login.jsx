@@ -25,6 +25,7 @@ const Login = () => {
                 localStorage.setItem('email', response.data.email);
                 localStorage.setItem('name', response.data.name);
                 localStorage.setItem('role', response.data.role);
+                localStorage.setItem('accessToken', response.data.access_token);
 
                 alert('User logged in successfully');
                 navigate('/main');  // Redirect to the main page after login

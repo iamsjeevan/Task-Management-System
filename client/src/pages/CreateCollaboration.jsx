@@ -11,7 +11,7 @@ const CreateCollaboration = () => {
   const [leaderName, setLeaderName] = useState('');
   const [priority, setPriority] = useState('');
   const [notes, setNotes] = useState('');
-  const [finalDate, setFinalDate] = useState(''); // Replaced status with finalDate
+  const [status, setStatus] = useState('pending'); // Status for collaboration
 
   const navigate = useNavigate(); // Initialize navigate
 
@@ -29,16 +29,18 @@ const CreateCollaboration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const data = {
       title: projectName,
       userEmail: leaderName,
       priority: priority,
       team: teamMembers,
       notes: notes,
-      finalDate: finalDate, // Using finalDate instead of status
+      status: status,  // Include status in the data
     };
 
-    const token = localStorage.getItem('token'); // Retrieve JWT token from localStorage
+    const token = localStorage.getItem('accessToken'); // Retrieve access token from localStorage
+
     if (!token) {
       alert('You are not authenticated. Please log in.');
       return;
@@ -55,6 +57,7 @@ const CreateCollaboration = () => {
       });
 
       const result = await response.json();
+
       if (response.ok) {
         alert('Task created successfully!');
         // Optionally reset the form fields
@@ -64,7 +67,7 @@ const CreateCollaboration = () => {
         setTeamMembers([]);
         setPriority('');
         setNotes('');
-        setFinalDate(''); // Reset finalDate field
+        setStatus('pending');  // Reset status
 
         // Redirect to /main
         navigate('/main');
@@ -154,13 +157,17 @@ const CreateCollaboration = () => {
             ></textarea>
           </div>
           <div className="mb-3">
-            <label>Final Date</label> {/* Replaced status with finalDate */}
-            <input
-              type="date"
+            <label>Status</label>
+            <select
               className="form-control"
-              value={finalDate}
-              onChange={(e) => setFinalDate(e.target.value)}
-            />
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              required
+            >
+              <option value="pending">Pending</option>
+              <option value="start">Start</option>
+              <option value="completed">Completed</option>
+            </select>
           </div>
           <button type="submit" className="btn btn-primary w-100">Submit</button>
         </form>

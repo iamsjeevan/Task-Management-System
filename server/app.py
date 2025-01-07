@@ -19,6 +19,9 @@ CORS(app)  # This allows all domains by default
 user_controller = UserController(mongo.db)
 task_controller = TaskController(mongo.db)
 notice_controller = NoticeController(mongo.db)
+@app.route('/admin_register', methods=['POST'])
+def admin_register():
+    return user_controller.admin_register()
 
 @app.route('/register', methods=['POST'])
 def register():

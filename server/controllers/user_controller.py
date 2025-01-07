@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
 
 class UserController:
@@ -14,18 +15,6 @@ class UserController:
             return jsonify({"message": "Email already registered!"}), 400
         new_user = self.user_model.register_user(data['name'], data['email'], data['password'])
         return jsonify({"message": "User registered successfully!"}), 201
-    def admin_register(self):
-        data = request.get_json()
-
-        # Check if user already exists
-        if self.user_model.find_user_by_email(data['email']):
-            return jsonify({"message": "Email already registered!"}), 400
-
-        # Register the new admin user
-        hashed_password = generate_password_hash(data['password'])
-        new_user = self.user_model.register_user(data['name'], data['email'], hashed_password, is_admin=True)
-
-        return jsonify({"message": "Admin user registered successfully!"}), 201
 
     def login(self):
         data = request.get_json()
@@ -39,6 +28,24 @@ class UserController:
         # Return the token and user info (username and name)
         return jsonify({
             'access_token': access_token,
-            'email': user['email'],  # Assuming you have a 'username' field
-            'name': user['name']  # Assuming you have a 'name' field
+            'email': user['email'],
+            'name': user['name']
         }), 200
+
+    def admin_register(self):
+        data = request.get_json()
+        # Check if the user already exists
+        user = self.user_model.find_user_by_email(data['email'])
+        if user:
+            return jsonify({"message": "Email already registered!"}), 400
+
+        # Create the hashed password
+        hashed_password = generate_password_hash(data['password'])
+        
+        # Register the user as an admin (you can add extra checks here for admin-specific roles)
+        new_user = self.user_model.register_user(data['name'], data['email'], hashed_password)
+        
+        # Set the user as an admin (you can adjust this logic if needed)
+        self.user_model.set_admin(new_user['email'])
+        
+        return jsonify({"message": "Admin registered successfully!"}), 201

@@ -34,6 +34,7 @@ class UserController:
 
     def admin_register(self):
         data = request.get_json()
+
         # Check if the user already exists
         user = self.user_model.find_user_by_email(data['email'])
         if user:
@@ -41,11 +42,9 @@ class UserController:
 
         # Create the hashed password
         hashed_password = generate_password_hash(data['password'])
+
+        # Register the user as an admin
+        new_user = self.user_model.register_user(data['name'], data['email'], hashed_password, is_admin=True)
         
-        # Register the user as an admin (you can add extra checks here for admin-specific roles)
-        new_user = self.user_model.register_user(data['name'], data['email'], hashed_password)
-        
-        # Set the user as an admin
-        self.user_model.set_admin(new_user['email'])
-        
+        # Return a success message
         return jsonify({"message": "Admin registered successfully!"}), 201

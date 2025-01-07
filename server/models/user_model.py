@@ -6,15 +6,20 @@ class UserModel:
         self.db = db
         self.collection = db['users']
 
-    def register_user(self, name, email, password):
+    def register_user(self, name, email, password, is_admin=False):
+        # Hash the password
         hashed_password = generate_password_hash(password)
+
+        # User data, include the isAdmin flag here
         user_data = {
             'name': name,
             'email': email,
             'password': hashed_password,
-            'role': 'user',
-            'isAdmin': False,  # By default, set isAdmin to False
+            'role': 'admin' if is_admin else 'user',  # Set role based on isAdmin flag
+            'isAdmin': is_admin,  # This field is now configurable during registration
         }
+
+        # Insert the user into the database
         self.collection.insert_one(user_data)
         return user_data
 

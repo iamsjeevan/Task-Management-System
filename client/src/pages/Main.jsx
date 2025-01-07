@@ -3,12 +3,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from '../components/Footer';
 import NavForAll from '../components/NavForAll';
 import { Link } from 'react-router-dom';  // Import Link for navigation
+import backgroundImage from '../assets/mainbg.png';  // Import image
 
 const Main = () => {
   return (
     <>
       <NavForAll />
-      <div className="d-flex">
+      <div className="d-flex" style={{
+        backgroundImage: `url(${backgroundImage})`,  // Use imported image as background
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh',
+        padding: '20px',  // Adding some padding to the outer container
+      }}>
         {/* Sidebar Navigation */}
         <div
           className="bg-light border-end vh-100 p-3"
@@ -45,8 +52,21 @@ const Main = () => {
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-grow-1 p-4">
-          <h2>Welcome to the App!</h2>
+        <div className="flex-grow-1 p-4" style={{
+          color: 'white',  // White text
+          marginTop: '20px',  // Ensure there’s space from the top
+          zIndex: '2',  // Ensuring text is on top
+        }}>
+          {/* Title with Black Color and Text Shadow */}
+          <h2 style={{
+            color: 'black',  // Set title color to black
+            textShadow: '4px 4px 6px rgba(255, 255, 255, 0.7)',  // White text shadow for visibility
+            fontSize: '2.5rem',  // Slightly larger text for better readability
+            fontWeight: 'bold',  // Bold title for emphasis
+          }}>
+            Welcome to WorkHive!
+          </h2>
+          
           <ul className="list-group">
             <li className="list-group-item d-flex justify-content-between align-items-center">
               This app allows you to stay organized and manage your tasks effectively. You'll never forget an important task again!

@@ -5,6 +5,7 @@ import Main from '../src/pages/Main';
 import Registration from '../src/pages/Registration';
 import CreateCollaboration from './pages/CreateCollaboration';
 import Home from './pages/Home';
+import CalendarPage from './pages/Calendar';
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
         <Route path="/main" element={<Main />} />
         <Route path="/create-task" element={<CreateCollaboration />} />
         <Route path="/tasks" element={<ShowCollaboration />} />
-        
+        <Route path="/calender" element={<CalendarPage />} />
       </Routes>
     </Router>
   );

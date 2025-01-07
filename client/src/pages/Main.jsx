@@ -38,7 +38,7 @@ const Main = () => {
             </li>
             {/* Calendar Button */}
             <li className="mt-3">
-              <a href="/calendar" className="btn btn-outline-dark w-100">
+              <a href="/calender" className="btn btn-outline-dark w-100">
                 📅 Calendar
               </a>
             </li>

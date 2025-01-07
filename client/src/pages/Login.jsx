@@ -1,7 +1,7 @@
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import background from '../assets/adminbg.png'; // Import your local background image
 
 const Login = () => {
@@ -12,34 +12,38 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const response = await axios.post(
-                'http://127.0.0.1:5000/login',
-                { email, password }
+                'http://127.0.0.1:5000/login',  // Your backend login endpoint
+                { email, password },
+                { withCredentials: true }  // Send cookies with the request
             );
-            if (response.data.access_token) {
-                // Store the access token and user info in localStorage
-                localStorage.setItem('accessToken', response.data.access_token);
+
+            if (response.data.message === 'Login successful') {
+                // Store user info in localStorage (optional, for state persistence)
                 localStorage.setItem('email', response.data.email);
                 localStorage.setItem('name', response.data.name);
-    
+                localStorage.setItem('role', response.data.role);
+
                 alert('User logged in successfully');
-                navigate('/main');
+                navigate('/main');  // Redirect to the main page after login
             } else {
                 alert(response.data.message || 'Login failed');
             }
         } catch (err) {
             console.error(err);
             alert('An error occurred, please try again');
+        } finally {
+            setLoading(false);
         }
     };
-    
 
     return (
-        <div 
-            className="login-container" 
+        <div
+            className="login-container"
             style={{
-                backgroundImage: `url(${background})`, // Set the background image
+                backgroundImage: `url(${background})`,  // Set the background image
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -78,8 +82,8 @@ const Login = () => {
                             style={{ padding: '10px', marginBottom: '15px', width: '100%', borderRadius: '5px' }}
                         />
                     </div>
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className="login-button"
                         style={{
                             width: '100%',

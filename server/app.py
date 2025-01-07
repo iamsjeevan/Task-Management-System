@@ -1,30 +1,28 @@
-# app.py
-
-from flask import Flask
-from flask_jwt_extended import JWTManager,jwt_required
+from flask import Flask, jsonify, request, make_response
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 from flask_pymongo import PyMongo
 from controllers.user_controller import UserController
 from controllers.task_controller import TaskController
 from controllers.notice_controller import NoticeController
+from models.user_model import UserModel
 from config import Config
 from flask_cors import CORS
-
-
 
 app = Flask(__name__)
 app.config.from_object(Config)
 mongo = PyMongo(app)
 jwt = JWTManager(app)
-CORS(app)  # This allows all domains by default
 
+# Updated CORS setup to allow credentials and specific origins
+CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
 
 user_controller = UserController(mongo.db)
 task_controller = TaskController(mongo.db)
 notice_controller = NoticeController(mongo.db)
+
 @app.route('/admin_register', methods=['POST'])
 def admin_register():
     return user_controller.admin_register()
-
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -33,6 +31,8 @@ def register():
 @app.route('/login', methods=['POST'])
 def login():
     return user_controller.login()
+
+
 @app.route('/tasks', methods=['GET'])
 def get_all_tasks():
     return task_controller.show_all()
@@ -52,11 +52,11 @@ def trash_task(task_id):
 @app.route('/notices', methods=['GET'])
 def get_notices():
     return notice_controller.get_all_notices()
+
 @app.route('/get_details', methods=['GET'])
 @jwt_required()  # Protect the route with JWT authentication
 def get_details():
     return user_controller.get_user_details()
-
 
 if __name__ == '__main__':
     app.run(debug=True)

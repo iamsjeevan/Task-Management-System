@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import Footer from '../components/Footer';
 import NavForAll from '../components/NavForAll';
+import backgroundImage from '../assets/adminbg.png';  // Import the image
 
 const CreateCollaboration = () => {
   const [teamSize, setTeamSize] = useState(0);
@@ -10,7 +11,7 @@ const CreateCollaboration = () => {
   const [leaderName, setLeaderName] = useState('');
   const [priority, setPriority] = useState('');
   const [notes, setNotes] = useState('');
-  const [status, setStatus] = useState('pending'); // default status
+  const [finalDate, setFinalDate] = useState(''); // Replaced status with finalDate
 
   const navigate = useNavigate(); // Initialize navigate
 
@@ -34,7 +35,7 @@ const CreateCollaboration = () => {
       priority: priority,
       team: teamMembers,
       notes: notes,
-      status: status,
+      finalDate: finalDate, // Using finalDate instead of status
     };
 
     try {
@@ -56,7 +57,7 @@ const CreateCollaboration = () => {
         setTeamMembers([]);
         setPriority('');
         setNotes('');
-        setStatus('pending'); // Reset status to default
+        setFinalDate(''); // Reset finalDate field
 
         // Redirect to /main
         navigate('/main');
@@ -74,7 +75,12 @@ const CreateCollaboration = () => {
       <NavForAll />
       <div 
         className="d-flex justify-content-center align-items-center" 
-        style={{ height: '100vh', backgroundImage: 'url(/path/to/your-image.jpg)', backgroundSize: 'cover' }}
+        style={{
+          height: '100vh',
+          backgroundImage: `url(${backgroundImage})`,  // Use the imported image here
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
       >
         <form className="bg-light p-5 rounded" onSubmit={handleSubmit}>
           <h2 className="text-center">Create Collaboration</h2>
@@ -141,16 +147,13 @@ const CreateCollaboration = () => {
             ></textarea>
           </div>
           <div className="mb-3">
-            <label>Status</label>
-            <select
+            <label>Final Date</label> {/* Replaced status with finalDate */}
+            <input
+              type="date"
               className="form-control"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            >
-              <option value="pending">Pending</option>
-              <option value="start">Start</option>
-              <option value="completed">Completed</option>
-            </select>
+              value={finalDate}
+              onChange={(e) => setFinalDate(e.target.value)}
+            />
           </div>
           <button type="submit" className="btn btn-primary w-100">Submit</button>
         </form>

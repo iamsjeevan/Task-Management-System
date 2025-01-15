@@ -1,0 +1,23 @@
+.
+├── README.md
+├── client
+│   ├── README.md
+│   ├── node_modules
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   └── src
+├── package-lock.json
+├── package.json
+├── project-tree.txt
+├── requirements.txt
+└── server
+    ├── __pycache__
+    ├── app.py
+    ├── config.py
+    ├── controllers
+    ├── models
+    ├── run.py
+    └── utils
+
+10 directories, 11 files
